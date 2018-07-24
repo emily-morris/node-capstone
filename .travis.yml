@@ -3,7 +3,7 @@ node_js: node
 deploy:
   provider: heroku
   api_key:
-    secure: HROQDmyouAfyfZvcOTmmhw
-  app: thawing-garden-70487
+    secure: f6P8RTj+ZWijkM+eWzPBoS2H9OreLkzCkdsDkRCHfLropT7e/ai9IVGC4aSbkYBfNYLudxxvCxoS+lKyLdITzrdcSwVNAOfvOF6nzxoo+S5lIRgu54/EegX2VvxFtmu6Nc2mSU1ov9kViTWI4bWjrMPKS6833T3vkZSBITFx7Fef2raxq1z7aBsL3ycfeqKLiiaw8H2UE0kAEm7WkuVWBCUc8anUTpfovrSOZhVdoNC2yhKFs2ERClv6Mq9lU00vaK+Y8/sRw8Olxr2vKRUtpglsj2UTXXY2TfjG5a6DHs40TpDigmNRxxEhJOsQLxj4gBkU0WNFB4iJDha3kTI43IkfvuD5LanOpjKmM5dfNGKkTGNJfKlY5tc6VoDgInOsHJbmoYzRKLMVG+0OAlKOD2ODkYA5CrEyYJFlkd77OfRhBOBPwJ3arDAX9H2e2e/zBToQMvyaE2seODrpJwfjRgzI3thllxjBDO5LfkH1KinuGA07B4NjZu70FwYPkCohUh1hjqcTCQSew1wWwvUtAzB98OPgGTyYzgrc2J4skHJDl+5K2FjHqtANL8UcYue+wqaX90MMyIGxTOoUBoLHDdzZ3HPDCv//L6sPg590pCMKp8olEa96W1nRSdqUQF8TWeUrVgvckQa8OKnFkt+KXXhrX7duJlPRHNgoIadgkno=
+  app: node-capstone
   on:
     repo: emily-morris/node-capstone
