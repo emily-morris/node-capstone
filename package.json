@@ -4,6 +4,7 @@
   "description": "Capstone for Thinkful",
   "main": "index.js",
   "scripts": {
+    "start": "node server.js",
     "test": "mocha"
   },
   "author": "",
