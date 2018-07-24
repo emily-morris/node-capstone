@@ -1,5 +1,5 @@
 {
-  "name": "capstone",
+  "name": "node-capstone",
   "version": "1.0.0",
   "description": "Capstone for Thinkful",
   "main": "index.js",
