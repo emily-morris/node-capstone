@@ -1,2 +1,9 @@
 language: node_js
 node_js: node
+deploy:
+  provider: heroku
+  api_key:
+    secure: HROQDmyouAfyfZvcOTmmhw
+  app: thawing-garden-70487
+  on:
+    repo: emily-morris/node-capstone
