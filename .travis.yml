@@ -1,9 +1,0 @@
-language: node_js
-node_js: node
-deploy:
-  provider: heroku
-  api_key:
-    secure: HS4A5kr2uT5XlodVqmNp4KDP6UWf3y6m+iSqjPc0Fw64/KSpXe+S0xdBAlCnUqFWf2nOBESRXLc6m4rH8JOaq+VGTgdMai1o7sjp681M5m8SHEB6fLz6TCZD+winhoT3i73B0yGwD2n8suaKClqigFLEDxTQQeV2I3LAeddPwkuZZW1bOtZGIP7qPSDeHJX8urcURtUce0gJ1l1YU+DdXuJtwDOYe5N6JT+hsUTBD8ZWGAUghK9LZlCr8w6JJhhvOaGeRTTrrWkn/uW2WuM14ro5TB2LPhKq50kFo3UP05CtOAFBLPC6w1vFKyn7lkWAdFz5jd40KHuLzEJU+T2hZY/AKEEro7k9YR3CygR2La0FmYLp0v0Tn+9tMYU4J+qrXqA1wE25TkxKtCeGTnrSpvJXU62JClTRAMxo9C6EUfc/fyu9jrXDXbQUjcbzqtQXenwwzK2tVjywK5xqGdgEn/QE1hptQCNplZAqgWN50Rj67beJajMLZ7CJp83AnOsotNQdeLF2InufcdbKRJNvBRjyAgB0/smoc5n4LbiiP2czjdIEsgxEpUYnqcpaWAVLVSraTgm5ZkmZlwwo7Ca/yvjDdpivdGRUgl2J06C+tFqPiPgFBibMWpXWhQRemT8rkZCscW7QQRdZHwfaaKLhtyE33uBIdVFRzZkASMr63iU=
-    app: serene-cliffs-30438
-    on:
-      repo: serene-cliffs-30438
