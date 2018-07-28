@@ -18,3 +18,14 @@ describe('index', function() {
 			});
 	});
 });
+
+describe('app', function() {
+	it('should return 200', function() {
+		return chai
+			.request(app)
+			.get('/')
+			.then(function(res) {
+				expect(res).to.have.status(200);
+			});
+	});
+});
