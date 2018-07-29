@@ -10,7 +10,7 @@ const app = express();
 app.use(express.static('public'));
 app.use(morgan('combined'));
 
-function searchPodcasts(query, res) {
+function getPodcasts(query, res) {
 	unirest.get('https://listennotes.p.mashape.com/api/v1/search?language=English&q='+ query +'&type=podcast')
 		.header('X-Mashape-Key', apiKey)
 		.header('Accept', 'application/json')
@@ -32,7 +32,11 @@ app.get('/', (req, res) => {
 
 app.get('/podcasts', (req, res) => {
 	console.log(req.query);
-	searchPodcasts(req.query.q, res);
+	getPodcasts(req.query.q, res);
+});
+
+app.get('/queue', (req, res) => {
+
 });
 
 if (require.main === module) {
