@@ -1,9 +1,15 @@
 'use strict';
 
 const express = require('express');
+const mongoose = require('mongoose');
 const morgan = require('morgan');
 const apiKey = 'FLPn3vd3iImshX0Wz9QLpJuAAYcop1Ml2jVjsnH8QFlK0EEpfK';
 const unirest = require('unirest');
+
+mongoose.Promise = global.Promise;
+
+const { PORT, DATABASE_URL } = require('./config');
+const { Profile } = require('./models');
 
 const app = express();
 
@@ -36,13 +42,56 @@ app.get('/podcasts', (req, res) => {
 });
 
 app.get('/queue', (req, res) => {
-
+	Profile.find()
+	.then(profile => {
+		res.json({profile});
+	})
+	.catch(err => {
+		console.err(err);
+		res.status(500).json({message: 'Something went wrong.'});
+	});
 });
 
-if (require.main === module) {
-  app.listen(process.env.PORT || 8080, function() {
-    console.info(`App listening on ${this.address().port}`);
+let server;
+
+function runServer(databaseURL, port = PORT) {
+	return new Promise((resolve, reject) => {
+		mongoose.connect(
+			databaseURL,
+			err => {
+				if (err) {
+					return reject(err);
+				}
+				server = app
+					.listen(port, () => {
+						console.log(`Your app is listening on port ${port}`);
+						resolve();
+				})
+				.on('error', err => {
+					mongoose.disconnect();
+					reject(err);
+				});
+			}
+		);
+	});
+}
+
+function closeServer() {
+  return mongoose.disconnect().then(() => {
+    return new Promise((resolve, reject) => {
+      console.log("Closing server");
+      server.close(err => {
+        if (err) {
+          return reject(err);
+        }
+        resolve();
+      });
+    });
   });
 }
 
-module.exports = app;
+if (require.main === module) {
+  runServer(DATABASE_URL).catch(err => console.error(err));
+}
+
+module.exports = { app, runServer, closeServer };

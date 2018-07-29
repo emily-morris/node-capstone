@@ -1,0 +1,10 @@
+{
+	"userId": "11111",
+	"podcasts": {
+		"id": "1234",
+		"website": "example.com",
+		"title": "Cool podcast",
+		"publisher": "Cool host",
+		"description": "Cool podcast about cool things"
+	}
+}
