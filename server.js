@@ -20,13 +20,13 @@ function getPodcasts(query, res) {
 	unirest.get('https://listennotes.p.mashape.com/api/v1/search?language=English&q='+ query +'&type=podcast')
 		.header('X-Mashape-Key', apiKey)
 		.header('Accept', 'application/json')
-		.end(function (result) {
+		.end(result => {
 		  res.send(result.body);
 	});
 }
 
 // enable CORS
-app.use(function(req, res, next) {
+app.use((req, res, next) => {
   res.header('Access-Control-Allow-Origin', '*');
   res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
   next();
