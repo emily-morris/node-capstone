@@ -1,7 +1,7 @@
 'use strict';
 
 function testButton() {
-	alert('added to queue');
+	alert(`Added to queue`);
 }
 
 $(document).ready(function () {
