@@ -42,6 +42,7 @@ app.get('/podcasts', (req, res) => {
 });
 
 app.get('/queue', (req, res) => {
+	console.log(res);
 	Profile.find()
 	.then(profile => {
 		res.json({profile});

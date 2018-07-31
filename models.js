@@ -3,14 +3,8 @@
 const mongoose = require('mongoose');
 
 const profileSchema = mongoose.Schema({
-	userId: { type: String, required: true },
-	podcasts: {
-		id: String,
-		website: String,
-		title: String,
-		publisher: String,
-		description: String
-	}
+	reference: { type: String, required: true },
+	rating: Boolean
 });
 
 const Profile = mongoose.model('Profile', profileSchema);
