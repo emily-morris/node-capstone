@@ -2,11 +2,23 @@
 
 const mongoose = require('mongoose');
 
-const profileSchema = mongoose.Schema({
-	reference: { type: String, required: true },
-	rating: Boolean
+const queueSchema = mongoose.Schema({
+		id: String,
+		title: String,
+		publisher: String,
+		description: String,
+		website: String,
+		user: {type: mongoose.Schema.Types.ObjectId, ref: 'User'}
 });
 
-const Profile = mongoose.model('Profile', profileSchema);
+const userSchema = mongoose.Schema({
+	userName: {
+		type: String,
+		unique: true
+	}
+});
 
-module.exports = { Profile };
+const Queue = mongoose.model('Queue', queueSchema);
+const User = mongoose.model('User', userSchema);
+
+module.exports = { Queue, User };

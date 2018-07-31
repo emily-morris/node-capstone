@@ -22,7 +22,7 @@ $(() => {
 		$('.queue-page').css('opacity', '1');
 	});
 	// return to main page
-	$('.new-search-btn').click(event => {
+	$('.new-search-btn').on('click', event => {
 		location.reload();
 	});
 });

@@ -1,4 +1,9 @@
 {
-	"reference": "podcastId",
-	"rating": true
+	"podcasts": {
+		"id": "1234",
+		"title": "Cool podcast",
+		"publisher": "Cool host",
+		"description": "Cool podcast about cool things",
+		"website": "example.com"
+	}
 }

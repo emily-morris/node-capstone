@@ -5,11 +5,13 @@ const mongoose = require('mongoose');
 const morgan = require('morgan');
 const apiKey = 'FLPn3vd3iImshX0Wz9QLpJuAAYcop1Ml2jVjsnH8QFlK0EEpfK';
 const unirest = require('unirest');
+const bodyParser = require('body-parser');
+const jsonParser = bodyParser.json();
 
 mongoose.Promise = global.Promise;
 
 const { PORT, DATABASE_URL } = require('./config');
-const { Profile } = require('./models');
+const { Queue } = require('./models');
 
 const app = express();
 
@@ -42,14 +44,37 @@ app.get('/podcasts', (req, res) => {
 });
 
 app.get('/queue', (req, res) => {
-	Profile.find()
-	.then(profile => {
-		res.json({profile});
+	Queue.find()
+	.then(queue => {
+		res.json({queue});
 	})
 	.catch(err => {
 		console.err(err);
 		res.status(500).json({message: 'Something went wrong.'});
 	});
+});
+
+app.post('/queue', jsonParser, (req, res) => {
+	console.log('Adding to queue');
+	console.log(req.body);
+	Queue
+		.create({
+				id: req.body.id, 
+				title: req.body.title, 
+				publisher: req.body.publisher, 
+				description: req.body.description, 
+				website: req.body.website
+		})
+		.then(item => res.status(201).json())
+		.catch(err => {
+			console.error(err);
+			res.status(500).json({error: 'Something went wrong'});
+		});
+});
+
+// use if client makes request to non-existent endpoint
+app.use('*', (req, res) => {
+	res.status(404).json({message: 'Not found'});
 });
 
 let server;
