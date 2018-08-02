@@ -1,9 +1,4 @@
 {
-	"podcasts": {
-		"id": "1234",
-		"title": "Cool podcast",
-		"publisher": "Cool host",
-		"description": "Cool podcast about cool things",
-		"website": "example.com"
-	}
+	"listenNotesId": "abcd",
+	"user": {"$oid": "5b61b805b7bc548452d268c2"}
 }

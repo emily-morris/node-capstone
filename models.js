@@ -2,12 +2,12 @@
 
 const mongoose = require('mongoose');
 
-const queueSchema = mongoose.Schema({
-		id: String,
-		title: String,
-		publisher: String,
-		description: String,
-		website: String,
+const queueItemSchema = mongoose.Schema({
+	// assume listenNotesId won't change
+		listenNotesId: {
+			type: String,
+			unique: true
+		},
 		user: {type: mongoose.Schema.Types.ObjectId, ref: 'User'}
 });
 
@@ -18,7 +18,16 @@ const userSchema = mongoose.Schema({
 	}
 });
 
-const Queue = mongoose.model('Queue', queueSchema);
+// queueItemSchema.pre('find', next => {
+// 	this.populate('user');
+// 	next();
+// });
+
+// queueItemSchema.virtual('userName').get(() => {
+// 	return `${this.user.userName}`.trim();
+// });
+
+const QueueItem = mongoose.model('QueueItem', queueItemSchema);
 const User = mongoose.model('User', userSchema);
 
-module.exports = { Queue, User };
+module.exports = { QueueItem, User };

@@ -3,20 +3,20 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const morgan = require('morgan');
-const apiKey = 'FLPn3vd3iImshX0Wz9QLpJuAAYcop1Ml2jVjsnH8QFlK0EEpfK';
 const unirest = require('unirest');
 const bodyParser = require('body-parser');
 const jsonParser = bodyParser.json();
+const apiKey = 'FLPn3vd3iImshX0Wz9QLpJuAAYcop1Ml2jVjsnH8QFlK0EEpfK';
 
 mongoose.Promise = global.Promise;
 
 const { PORT, DATABASE_URL } = require('./config');
-const { Queue } = require('./models');
+const { QueueItem, User } = require('./models');
 
 const app = express();
 
 app.use(express.static('public'));
-app.use(morgan('combined'));
+app.use(morgan('common'));
 
 function getPodcasts(query, res) {
 	unirest.get('https://listennotes.p.mashape.com/api/v1/search?language=English&q='+ query +'&type=podcast')
@@ -43,10 +43,10 @@ app.get('/podcasts', (req, res) => {
 	getPodcasts(req.query.q, res);
 });
 
-app.get('/queue', (req, res) => {
-	Queue.find()
-	.then(queue => {
-		res.json({queue});
+app.get('/queueItem', (req, res) => {
+	QueueItem.find()
+	.then(queueItem => {
+		res.json({queueItem});
 	})
 	.catch(err => {
 		console.err(err);
@@ -54,18 +54,50 @@ app.get('/queue', (req, res) => {
 	});
 });
 
-app.post('/queue', jsonParser, (req, res) => {
-	console.log('Adding to queue');
-	console.log(req.body);
-	Queue
-		.create({
-				id: req.body.id, 
-				title: req.body.title, 
-				publisher: req.body.publisher, 
-				description: req.body.description, 
-				website: req.body.website
+app.get('/user', (req, res) => {
+	User
+		.find()
+		.then(users => {
+			res.json(users.map(user => {
+				return {
+					id: user._id,
+					userName: user.userName
+				};
+			}));
 		})
-		.then(item => res.status(201).json())
+		.catch(err => {
+			console.error(err);
+			res.status(500).json({error: 'Something went wrong'})
+		});
+});
+
+app.post('/queueItem', jsonParser, (req, res) => {
+	console.log('Adding to queueItem');
+	console.log(req.body);
+	console.log(req.body.id);
+	User
+		.findById(req.body.user_id)
+		.then(user => {
+			if(user) {
+				QueueItem
+					.create({
+						listenNotesId: req.body.id
+					})
+					.then(item => res.status(201).json({
+						id: item.id,
+						user: user._id
+					}))
+					.catch(err => {
+						console.error(err);
+						res.status(500).json({error: 'Something went wrong'});
+					});
+			}
+			else {
+				const message = `User not found`;
+				console.error(message);
+				return res.status(400).send(message);
+			}
+		})
 		.catch(err => {
 			console.error(err);
 			res.status(500).json({error: 'Something went wrong'});
