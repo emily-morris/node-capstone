@@ -1,30 +1,36 @@
 'use strict';
 
-function testButton() {
-	alert('added to queue');
-}
-
-$(function () {
-
-	$('.new-search-btn').hide();
-	$('.queue').hide();
-
+$(() => {
 	// user submits search form
 	$('.search-form').submit(event => {
 		event.preventDefault();
-		$('main').hide();
-		$.get('/podcasts?q=' + $('.query').val(), function(data) {
+		$('main').css('display', 'none');
+		$.get('/podcasts?q=' + $('.query').val(), data => {
+			$('.search-page').css('opacity', '1');
 			// search results populate
-			data.results.forEach(function(item) {
-				$('.search-results').append(`<p>${item.title_original}<br>by ${item.publisher_original}<br>${item.description_original}</p>`);
-				$('.search-results').append(`<button onclick="testButton()">Add to queue</button>`);
+			data.results.forEach(item => {
+				$('.search-page').append(`<p>
+					${item.title_original}
+					<br>by ${item.publisher_original}
+					<br>${item.description_original}
+					</p>
+					<button class='add-btn' data-id='${item.id}' data-title='${item.title_original}'>
+						Add to queue
+					</button>`);
 			});
-			$('.new-search-btn').show();
 		});
 	});
-
-	$('.new-search-btn').click(event => {
+	$('.search-page').on('click', '.add-btn', event => {
+		const podcastId = ($(event.currentTarget).data('title'));
+		alert(`Added ${podcastId} to queue`);
+	});
+	// view queue
+	$('.queue-btn').on('click', event => {
+		$('.search-page').css('display', 'none');
+		$('.queue-page').css('opacity', '1');
+	});
+	// return to main page
+	$('.new-search-btn').on('click', event => {
 		location.reload();
 	});
-
 });
