@@ -4,7 +4,7 @@ function testButton() {
 	alert('added to queue');
 }
 
-$(document).ready(function () {
+$(function () {
 
 	$('.new-search-btn').hide();
 	$('.queue').hide();
