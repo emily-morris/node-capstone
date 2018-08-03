@@ -39,7 +39,6 @@ app.get('/', (req, res) => {
 });
 
 app.get('/podcasts', (req, res) => {
-	console.log(req.query);
 	getPodcasts(req.query.q, res);
 });
 
@@ -72,9 +71,7 @@ app.get('/user', (req, res) => {
 });
 
 app.post('/queueItem', jsonParser, (req, res) => {
-	console.log('Adding to queueItem');
-	console.log(req.body);
-	console.log(req.body.id);
+	console.log('Adding to queue');
 	User
 		.findById(req.body.user_id)
 		.then(user => {

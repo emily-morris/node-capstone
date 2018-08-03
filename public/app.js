@@ -9,20 +9,24 @@ $(() => {
 			$('.search-page').css('opacity', '1');
 			// search results populate
 			data.results.forEach(item => {
-				$('.search-page').append(`<p>
+				$('.result-list').append(`<li>
 					${item.title_original}
 					<br>by ${item.publisher_original}
-					<br>${item.description_original}
-					</p>
 					<button class='add-btn' data-id='${item.id}' data-title='${item.title_original}'>
 						Add to queue
-					</button>`);
+					</button>
+					<br>${item.description_original}
+					</li>
+					<br>`);
 			});
 		});
 	});
 	$('.search-page').on('click', '.add-btn', event => {
-		const podcastId = ($(event.currentTarget).data('title'));
-		alert(`Added ${podcastId} to queue`);
+		const podcastTitle = ($(event.currentTarget).data('title'));
+		alert(`Added ${podcastTitle} to queue`);
+		$('.queue').append(`<li>
+			${podcastTitle}
+			</li>`);
 	});
 	// view queue
 	$('.queue-btn').on('click', event => {
