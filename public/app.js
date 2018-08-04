@@ -11,17 +11,19 @@ $(() => {
 			data.results.forEach(item => {
 				$('.result-list').append(`<li>
 					${item.title_original}
-					<br>by ${item.publisher_original}
 					<button class='add-btn' data-id='${item.id}' data-title='${item.title_original}'>
 						Add to queue
 					</button>
+					<br><img src='${item.thumbnail}' alt='Small image from podcast site'>
 					<br>${item.description_original}
+					<br>
 					</li>
 					<br>`);
 			});
 		});
 	});
 	$('.search-page').on('click', '.add-btn', event => {
+		console.log($(event.currentTarget));
 		const podcastTitle = ($(event.currentTarget).data('title'));
 		alert(`Added ${podcastTitle} to queue`);
 		$('.queue').append(`<li>
