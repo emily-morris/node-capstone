@@ -27,12 +27,38 @@ function getPodcasts(query, res) {
 	});
 }
 
+function getUserQueue(res) {
+	QueueItem
+		.find({user: ('5b61b805b7bc548452d268c2')})
+		.then(queueItems => {
+			let queue = [];
+			queueItems.forEach((item, index) => {
+				unirest.get('https://listennotes.p.mashape.com/api/v1/podcasts/' + item.listenNotesId)
+				.header('X-Mashape-Key', apiKey)
+				.header('Accept', 'application/json')
+				.end(function (result) {
+					let podcast = {
+						title: result.body.title,
+						thumbnail: result.body.thumbnail,
+						description: result.body.description,
+						website: result.body.website
+					};
+					queue.push(podcast);
+					if(queue.length === queueItems.length) {
+						res.status(200).json(queue);
+					}
+				});
+			})
+		})
+}
+
 // enable CORS
 app.use((req, res, next) => {
   res.header('Access-Control-Allow-Origin', '*');
   res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
   next();
 });
+
 
 app.get('/', (req, res) => {
   res.sendFile(__dirname + '/index.html');
@@ -41,6 +67,10 @@ app.get('/', (req, res) => {
 app.get('/podcasts', (req, res) => {
 	getPodcasts(req.query.q, res);
 });
+
+app.get('/queue', (req, res) => {
+	getUserQueue(res);
+})
 
 app.get('/queueItem', (req, res) => {
 	QueueItem.find()
@@ -70,15 +100,22 @@ app.get('/user', (req, res) => {
 		});
 });
 
+
+
 app.post('/queueItem', jsonParser, (req, res) => {
 	console.log('Adding to queue');
+	console.log(req);
+	console.log(req.body);
+	console.log(req.query);
+	console.log(req.params);
 	User
-		.findById(req.body.user_id)
+		.findById(req.query.user_id)
 		.then(user => {
 			if(user) {
 				QueueItem
 					.create({
-						listenNotesId: req.body.id
+						listenNotesId: req.query.id,
+						user: req.query.user_id
 					})
 					.then(item => res.status(201).json({
 						id: item.id,

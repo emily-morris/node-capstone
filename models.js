@@ -18,15 +18,6 @@ const userSchema = mongoose.Schema({
 	}
 });
 
-// queueItemSchema.pre('find', next => {
-// 	this.populate('user');
-// 	next();
-// });
-
-// queueItemSchema.virtual('userName').get(() => {
-// 	return `${this.user.userName}`.trim();
-// });
-
 const QueueItem = mongoose.model('QueueItem', queueItemSchema);
 const User = mongoose.model('User', userSchema);
 

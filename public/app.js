@@ -1,6 +1,15 @@
 'use strict';
 
 $(() => {
+
+	let currentUser;
+
+	$.get('/user', data => {
+		currentUser = {
+			id: data[0].id,
+			userName: data[0].userName
+		}
+	});
 	// user submits search form
 	$('.search-form').submit(event => {
 		event.preventDefault();
@@ -22,19 +31,35 @@ $(() => {
 			});
 		});
 	});
+
 	$('.search-page').on('click', '.add-btn', event => {
-		console.log($(event.currentTarget));
-		const podcastTitle = ($(event.currentTarget).data('title'));
-		alert(`Added ${podcastTitle} to queue`);
-		$('.queue').append(`<li>
-			${podcastTitle}
-			</li>`);
+		console.log(event);
+		const params = {
+			user_id: currentUser.id,
+			id: event.currentTarget.dataset.id
+		}
+		$.post('/queueItem?user_id=' + params.user_id + '&id=' + params.id,
+				data => {
+					console.log(params.id);
+					$.get									
+				}
+		);
+		// const podcastTitle = ($(event.currentTarget).data('title'));
+		// alert(`Added ${podcastTitle} to queue`);
 	});
+
 	// view queue
 	$('.queue-btn').on('click', event => {
 		$('.search-page').css('display', 'none');
 		$('.queue-page').css('opacity', '1');
+		$.get('/queueItem', data => {
+			console.log(data);
+			data.queueItem.forEach(item => {
+				console.log(item);
+			});
+		});
 	});
+
 	// return to main page
 	$('.new-search-btn').on('click', event => {
 		location.reload();
