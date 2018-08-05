@@ -4,6 +4,13 @@ $(() => {
 
 	let currentUser;
 
+	$.get('/user', data => {
+		currentUser = {
+			id: data[0].id,
+			userName: data[0].userName
+		}
+	});
+
 	// user submits search form
 	$('.search-form').submit(event => {
 		event.preventDefault();
@@ -45,12 +52,6 @@ $(() => {
 	$('.queue-btn').on('click', event => {
 		$('.search-page').css('display', 'none');
 		$('.queue-page').css('opacity', '1');
-		$.get('/user', data => {
-			currentUser = {
-				id: data[0].id,
-				userName: data[0].userName
-			}
-		});
 		$.get('/queue', data => {
 			data.forEach(item => {
 				console.log(item);
