@@ -11,7 +11,7 @@ $(() => {
 		}
 	});
 
-	// user submits search form
+	// submit search form
 	$('.search-form').submit(event => {
 		event.preventDefault();
 		$('main').css('display', 'none');
@@ -33,17 +33,13 @@ $(() => {
 		});
 	});
 
+	// add podcast to queue
 	$('.search-page').on('click', '.add-btn', event => {
 		const params = {
 			user_id: currentUser.id,
 			id: event.currentTarget.dataset.id
 		}
-		$.post('/queueItem?user_id=' + params.user_id + '&id=' + params.id,
-				data => {
-					console.log(params.id);
-					$.get									
-				}
-		);
+		$.post('/queueItem?user_id=' + params.user_id + '&id=' + params.id);
 		const podcastTitle = ($(event.currentTarget).data('title'));
 		alert(`Added ${podcastTitle} to queue`);
 	});
