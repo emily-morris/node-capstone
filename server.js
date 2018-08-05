@@ -37,13 +37,13 @@ function getUserQueue(res) {
 				.header('X-Mashape-Key', apiKey)
 				.header('Accept', 'application/json')
 				.end(function (result) {
-					let podcast = {
+					let podcastInfo = {
 						title: result.body.title,
 						thumbnail: result.body.thumbnail,
 						description: result.body.description,
 						website: result.body.website
 					};
-					queue.push(podcast);
+					queue.push(podcastInfo);
 					if(queue.length === queueItems.length) {
 						res.status(200).json(queue);
 					}
@@ -58,7 +58,6 @@ app.use((req, res, next) => {
   res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
   next();
 });
-
 
 app.get('/', (req, res) => {
   res.sendFile(__dirname + '/index.html');
@@ -100,14 +99,8 @@ app.get('/user', (req, res) => {
 		});
 });
 
-
-
 app.post('/queueItem', jsonParser, (req, res) => {
 	console.log('Adding to queue');
-	console.log(req);
-	console.log(req.body);
-	console.log(req.query);
-	console.log(req.params);
 	User
 		.findById(req.query.user_id)
 		.then(user => {

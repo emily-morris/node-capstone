@@ -4,12 +4,6 @@ $(() => {
 
 	let currentUser;
 
-	$.get('/user', data => {
-		currentUser = {
-			id: data[0].id,
-			userName: data[0].userName
-		}
-	});
 	// user submits search form
 	$('.search-form').submit(event => {
 		event.preventDefault();
@@ -33,7 +27,6 @@ $(() => {
 	});
 
 	$('.search-page').on('click', '.add-btn', event => {
-		console.log(event);
 		const params = {
 			user_id: currentUser.id,
 			id: event.currentTarget.dataset.id
@@ -44,19 +37,34 @@ $(() => {
 					$.get									
 				}
 		);
-		// const podcastTitle = ($(event.currentTarget).data('title'));
-		// alert(`Added ${podcastTitle} to queue`);
+		const podcastTitle = ($(event.currentTarget).data('title'));
+		alert(`Added ${podcastTitle} to queue`);
 	});
 
 	// view queue
 	$('.queue-btn').on('click', event => {
 		$('.search-page').css('display', 'none');
 		$('.queue-page').css('opacity', '1');
-		$.get('/queueItem', data => {
-			console.log(data);
-			data.queueItem.forEach(item => {
+		$.get('/user', data => {
+			currentUser = {
+				id: data[0].id,
+				userName: data[0].userName
+			}
+		});
+		$.get('/queue', data => {
+			data.forEach(item => {
 				console.log(item);
-			});
+				$('.queue').append(`<li>
+					${item.title}
+					<button class='remove-btn' data-title='${item.title}'>
+						Remove from queue
+					</button>
+					<br><img src='${item.thumbnail}' alt='Small image from podcast site'>
+					<br>${item.description}
+					<br><a href='${item.website}'>Listen to podcast</a>
+					</li>
+					<br>`);
+			})
 		});
 	});
 
