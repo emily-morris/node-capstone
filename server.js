@@ -55,7 +55,7 @@ function getUserQueue(res) {
 // enable CORS
 app.use((req, res, next) => {
   res.header('Access-Control-Allow-Origin', '*');
-  res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
+  res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization');
   next();
 });
 
@@ -101,14 +101,15 @@ app.get('/user', (req, res) => {
 
 app.post('/queueItem', jsonParser, (req, res) => {
 	console.log('Adding to queue');
+	debugger
 	User
-		.findById(req.query.user_id)
+		.findById(req.body.user_id)
 		.then(user => {
 			if(user) {
 				QueueItem
 					.create({
-						listenNotesId: req.query.id,
-						user: req.query.user_id
+						listenNotesId: req.body.id,
+						user: req.body.user_id
 					})
 					.then(item => res.status(201).json({
 						id: item.id,
@@ -128,6 +129,15 @@ app.post('/queueItem', jsonParser, (req, res) => {
 		.catch(err => {
 			console.error(err);
 			res.status(500).json({error: 'Something went wrong'});
+		});
+});
+
+app.delete('/queueItem/:id', (req, res) => {
+	QueueItem
+		.deleteOne(req.query.id)
+		.then(() => {
+			console.log(`Deleted queue item with id \`${req.params.id}\``);
+			res.status(204).end();
 		});
 });
 

@@ -35,13 +35,35 @@ $(() => {
 
 	// add podcast to queue
 	$('.search-page').on('click', '.add-btn', event => {
-		const params = {
+		let body = {
 			user_id: currentUser.id,
 			id: event.currentTarget.dataset.id
-		}
-		$.post('/queueItem?user_id=' + params.user_id + '&id=' + params.id);
-		const podcastTitle = ($(event.currentTarget).data('title'));
+		};
+		$.ajax({
+				type: 'POST', 
+				url:'/queueItem', 
+				data: JSON.stringify(body),
+				contentType: 'application/json'
+		});
+		let podcastTitle = ($(event.currentTarget).data('title'));
 		alert(`Added ${podcastTitle} to queue`);
+	});
+
+	// delete podcast from queue
+	$('.queue-page').on('click', '.remove-btn', event => {
+		console.log(event);
+		let body = {
+			user_id: currentUser.id,
+			id: event.currentTarget.dataset.id
+		};
+		$.ajax({
+			type: 'DELETE',
+			url: `/queueItem/${body.id}`,
+			data: JSON.stringify(body),
+			contentType: 'application/json'
+		});
+		let podcastTitle = ($(event.currentTarget).data('title'));
+		alert(`Removed ${podcastTitle} from queue`);
 	});
 
 	// view queue
@@ -50,7 +72,6 @@ $(() => {
 		$('.queue-page').css('opacity', '1');
 		$.get('/queue', data => {
 			data.forEach(item => {
-				console.log(item);
 				$('.queue').append(`<li>
 					${item.title}
 					<button class='remove-btn' data-title='${item.title}'>

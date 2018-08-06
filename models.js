@@ -2,13 +2,18 @@
 
 const mongoose = require('mongoose');
 
+const noteSchema = mongoose.Schema({
+	content: {type: String}
+});
+
 const queueItemSchema = mongoose.Schema({
 	// assume listenNotesId won't change
 		listenNotesId: {
 			type: String,
 			unique: true
 		},
-		user: {type: mongoose.Schema.Types.ObjectId, ref: 'User'}
+		user: {type: mongoose.Schema.Types.ObjectId, ref: 'User'},
+		notes: [noteSchema]
 });
 
 const userSchema = mongoose.Schema({
