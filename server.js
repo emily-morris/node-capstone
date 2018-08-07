@@ -37,11 +37,13 @@ function getUserQueue(res) {
 				.header('X-Mashape-Key', apiKey)
 				.header('Accept', 'application/json')
 				.end(function (result) {
+					console.log(result.body);
 					let podcastInfo = {
+						listenNotesId: result.body.id,
 						title: result.body.title,
 						thumbnail: result.body.thumbnail,
 						description: result.body.description,
-						website: result.body.website
+						website: result.body.listennotes_url
 					};
 					queue.push(podcastInfo);
 					if(queue.length === queueItems.length) {
@@ -133,6 +135,7 @@ app.post('/queueItem', jsonParser, (req, res) => {
 });
 
 app.delete('/queueItem/:id', (req, res) => {
+	console.log(req);
 	QueueItem
 		.deleteOne(req.query.id)
 		.then(() => {

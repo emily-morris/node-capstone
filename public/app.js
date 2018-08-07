@@ -51,7 +51,6 @@ $(() => {
 
 	// delete podcast from queue
 	$('.queue-page').on('click', '.remove-btn', event => {
-		console.log(event);
 		let body = {
 			user_id: currentUser.id,
 			id: event.currentTarget.dataset.id
@@ -74,7 +73,7 @@ $(() => {
 			data.forEach(item => {
 				$('.queue').append(`<li>
 					${item.title}
-					<button class='remove-btn' data-title='${item.title}'>
+					<button class='remove-btn' data-id='${item.listenNotesId}' data-title='${item.title}'>
 						Remove from queue
 					</button>
 					<br><img src='${item.thumbnail}' alt='Small image from podcast site'>
