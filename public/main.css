@@ -1,0 +1,23 @@
+* {
+	box-sizing: border-box;
+}
+
+header,
+main {
+	display: flex;
+	flex-direction: column;
+	text-align: center;
+}
+
+.search-page,
+.queue-page {
+	opacity: 0;
+}
+
+ul {
+	list-style: none;
+}
+
+li {
+	display: inline;
+}

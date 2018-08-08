@@ -1,9 +1,40 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-	<title>Bingeworthy</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>bingeworthy</title>
+	<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+	<link href="https://fonts.googleapis.com/css?family=Karla" rel="stylesheet">
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/normalize/4.1.1/normalize.css" rel="stylesheet">
+	<link rel="stylesheet" type="text/css" href="/main.css">
 </head>
 <body>
-	<h1>Hello world</h1>
+	<header class="header">
+		<h1>bingeworthy</h1>
+		<!-- <nav class="nav">
+			<ul>
+				<a href="http://localhost:8080"><li>HOME</li></a>
+			</ul>
+		</nav> -->
+	</header>
+	<main>
+		<h1>find your next favorite podcast</h1>
+		<form action="#" class="search-form">
+			<label for="search-term" class="hidden">What are you into?</label>
+			<input type="search" name="q" class="query" placeholder="Meditation, comedy, etc." required>
+			<input type="submit" role="button" value="Get podcasts">
+		</form>
+	</main>
+	<section role="complementary" class="search-page">
+		<ul class="result-list"></ul>
+		<button href="#" class="new-search-btn">New search</button>
+		<button href="#" class="queue-btn">Go to queue</button>
+	</section>
+	<section role="complementary" class="queue-page">
+		<ul class="queue"></ul>
+		<button href="#" class="new-search-btn">New search</button>
+	</section>
+	<script src="/app.js"></script>
 </body>
 </html>
