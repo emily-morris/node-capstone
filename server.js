@@ -41,7 +41,8 @@ function getUserQueue(res) {
 						title: result.body.title,
 						thumbnail: result.body.thumbnail,
 						description: result.body.description,
-						website: result.body.listennotes_url
+						website: result.body.listennotes_url,
+						notes: item.notes
 					};
 					queue.push(podcastInfo);
 					if(queue.length === queueItems.length) {
@@ -134,18 +135,18 @@ app.delete('/queueItem/:id', (req, res) => {
 		});
 });
 
-app.put('/queueItem', jsonParser, (req, res) => {
-	console.log(req.body);
+app.put('/queueItem/:id', jsonParser, (req, res, next) => {
 	QueueItem
 		.findOne({
 			listenNotesId: req.body.id
 		})
 		.then(item => {
 			console.log(item);
-			item.notes.push({content: req.body.content});
+			item.notes = req.body.notes;
 			item.save();
 			res.status(204).end();
-		});
+		})
+		.catch(next);
 });
 
 // use if client makes request to non-existent endpoint

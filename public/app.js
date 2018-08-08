@@ -79,16 +79,36 @@ $(() => {
 					</button>
 					<br><img src='${item.thumbnail}' alt='Small image from podcast site'>
 					<br>${item.description}
-					<br><a href='${item.website}' target='_blank'>Listen to podcast</a>
-					<br><label for='notes'>Notes:</label><textarea id='notes' name='notes'></textarea>
+					<br><br><a href='${item.website}' target='_blank'>Listen to podcast</a>
+					<br><br><form>
+							<fieldset>
+								<legend>Make a note about this podcast</legend>
+									<label for='notes'>Notes:</label>
+										<input type='text' id='notes' placeholder='good podcast' value='${item.notes}'>
+									<label for='save'></label>
+									<input class='save-note' data-id='${item.listenNotesId}' type='button' id='save' value='save'>
+							</fieldset>
+						</form>
 					</li>
 					<br>`);
 			})
 		});
 	});
 
-	// add notes to queue
-
+	// add notes to queue items
+	$('.queue-page').on('click', '.save-note', event => {
+		let body = {
+			user_id: currentUser.id,
+			id: event.currentTarget.dataset.id,
+			notes: $('#notes').val()
+		};
+		$.ajax({
+			type: 'PUT',
+			url: `/queueItem/${body.id}`,
+			data: JSON.stringify(body),
+			contentType: 'application/json'
+		});
+	});
 
 	// return to main page
 	$('.new-search-btn').on('click', event => {

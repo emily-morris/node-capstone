@@ -3,9 +3,6 @@
 const mongoose = require('mongoose');
 mongoose.Promise = global.Promise;
 
-const noteSchema = mongoose.Schema({
-	content: {type: String}
-});
 
 const queueItemSchema = mongoose.Schema({
 	// assume listenNotesId won't change
@@ -14,7 +11,7 @@ const queueItemSchema = mongoose.Schema({
 			unique: true
 		},
 		user: {type: mongoose.Schema.Types.ObjectId, ref: 'User'},
-		notes: [noteSchema]
+		notes: String
 });
 
 const userSchema = mongoose.Schema({
