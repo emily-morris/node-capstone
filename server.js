@@ -4,8 +4,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 const morgan = require('morgan');
 const unirest = require('unirest');
-const bodyParser = require('body-parser');
-const jsonParser = bodyParser.json();
+const jsonParser = require('body-parser').json();
 const apiKey = 'FLPn3vd3iImshX0Wz9QLpJuAAYcop1Ml2jVjsnH8QFlK0EEpfK';
 
 mongoose.Promise = global.Promise;
@@ -37,7 +36,6 @@ function getUserQueue(res) {
 				.header('X-Mashape-Key', apiKey)
 				.header('Accept', 'application/json')
 				.end(function (result) {
-					console.log(result.body);
 					let podcastInfo = {
 						listenNotesId: result.body.id,
 						title: result.body.title,
@@ -53,13 +51,6 @@ function getUserQueue(res) {
 			})
 		})
 }
-
-// enable CORS
-app.use((req, res, next) => {
-  res.header('Access-Control-Allow-Origin', '*');
-  res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization');
-  next();
-});
 
 app.get('/', (req, res) => {
   res.sendFile(__dirname + '/index.html');
@@ -135,11 +126,24 @@ app.post('/queueItem', jsonParser, (req, res) => {
 });
 
 app.delete('/queueItem/:id', (req, res) => {
-	console.log(req);
 	QueueItem
-		.deleteOne(req.query.id)
+		.deleteOne({listenNotesId: req.params.id})
 		.then(() => {
 			console.log(`Deleted queue item with id \`${req.params.id}\``);
+			res.status(204).end();
+		});
+});
+
+app.put('/queueItem', jsonParser, (req, res) => {
+	console.log(req.body);
+	QueueItem
+		.findOne({
+			listenNotesId: req.body.id
+		})
+		.then(item => {
+			console.log(item);
+			item.notes.push({content: req.body.content});
+			item.save();
 			res.status(204).end();
 		});
 });

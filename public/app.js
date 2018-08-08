@@ -72,18 +72,23 @@ $(() => {
 		$.get('/queue', data => {
 			data.forEach(item => {
 				$('.queue').append(`<li>
+					<br>
 					${item.title}
 					<button class='remove-btn' data-id='${item.listenNotesId}' data-title='${item.title}'>
 						Remove from queue
 					</button>
 					<br><img src='${item.thumbnail}' alt='Small image from podcast site'>
 					<br>${item.description}
-					<br><a href='${item.website}'>Listen to podcast</a>
+					<br><a href='${item.website}' target='_blank'>Listen to podcast</a>
+					<br><label for='notes'>Notes:</label><textarea id='notes' name='notes'></textarea>
 					</li>
 					<br>`);
 			})
 		});
 	});
+
+	// add notes to queue
+
 
 	// return to main page
 	$('.new-search-btn').on('click', event => {
