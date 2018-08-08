@@ -84,7 +84,7 @@ $(() => {
 							<fieldset>
 								<legend>Make a note about this podcast</legend>
 									<label for='notes'>Notes:</label>
-										<input type='text' id='notes' placeholder='good podcast' value='${item.notes}'>
+										<input type='text' id='${item.listenNotesId}-notes' placeholder='good podcast' value='${item.notes}'>
 									<label for='save'></label>
 									<input class='save-note' data-id='${item.listenNotesId}' type='button' id='save' value='save'>
 							</fieldset>
@@ -100,7 +100,7 @@ $(() => {
 		let body = {
 			user_id: currentUser.id,
 			id: event.currentTarget.dataset.id,
-			notes: $('#notes').val()
+			notes: $('#' + event.currentTarget.dataset.id + '-notes')[0].value
 		};
 		$.ajax({
 			type: 'PUT',

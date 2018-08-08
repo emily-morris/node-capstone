@@ -32,6 +32,7 @@ function getUserQueue(res) {
 		.then(queueItems => {
 			let queue = [];
 			queueItems.forEach((item, index) => {
+				console.log(item);
 				unirest.get('https://listennotes.p.mashape.com/api/v1/podcasts/' + item.listenNotesId)
 				.header('X-Mashape-Key', apiKey)
 				.header('Accept', 'application/json')
