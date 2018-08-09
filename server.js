@@ -196,9 +196,11 @@ function closeServer() {
   });
 }
 
-app.listen(8080, () => {
-	console.log('App listening on port 8080');
-});
+if(require.main === module) {
+	app.listen(process.env.PORT || 8080, () => {
+		console.log(`App listening on ${this.address().port}`);
+	});
+}
 
 if (require.main === module) {
   runServer(DATABASE_URL).catch(err => console.error(err));
