@@ -57,6 +57,10 @@ app.get('/', (req, res) => {
   res.sendFile(__dirname + '/index.html');
 });
 
+app.get('/', (req, res) => {
+  res.sendFile(__dirname + '/app.js');
+});
+
 app.get('/podcasts', (req, res) => {
 	getPodcasts(req.query.q, res);
 });
@@ -191,6 +195,10 @@ function closeServer() {
     });
   });
 }
+
+app.listen(8080, () => {
+	console.log('App listening on port 8080');
+});
 
 if (require.main === module) {
   runServer(DATABASE_URL).catch(err => console.error(err));
