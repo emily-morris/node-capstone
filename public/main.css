@@ -14,17 +14,12 @@ main {
 
 h1 {
 	text-align: center;
+	font-size: 45px;
 }
 
 .fixed-nav {
 	position: fixed;
 	width: 100%;
-	height: 50px;
-}
-
-h2 {
-	text-align: center;
-	font-size: 22px;
 }
 
 .search-bar {
