@@ -2,29 +2,31 @@
 
 const chai = require('chai');
 const chaiHttp = require('chai-http');
-const app = require('../server.js');
+const mongoose = require('mongoose');
 
+// make expect syntax available
 const expect = chai.expect;
+
+const {app, runServer, closeServer} = require('../server');
+const {TEST_DATABASE_URL} = require('../config');
 
 chai.use(chaiHttp);
 
-describe('index', () => {
-	it('should return 200', () => {
-		return chai
-			.request(app)
-			.get('/')
-			.then((res) => {
-				expect(res).to.have.status(200);
-			});
+describe('index page', function() {
+	before(function() {
+		return runServer(TEST_DATABASE_URL);
 	});
-});
 
-describe('app', () => {
-	it('should return 200', () => {
-		return chai
-			.request(app)
+	after(function() {
+		return closeServer();
+	});
+
+	it('should exist', function() {
+		let res;
+		return chai.request(app)
 			.get('/')
-			.then((res) => {
+			.then(function(_res) {
+				res = _res;
 				expect(res).to.have.status(200);
 			});
 	});
