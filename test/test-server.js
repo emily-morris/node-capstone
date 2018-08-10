@@ -12,25 +12,40 @@ const should = chai.should();
 
 const {QueueItem, User} = require('../models');
 const {app, runServer, closeServer} = require('../server');
-const {TEST_DATABASE_URL} = require('../config');
 
 chai.use(chaiHttp);
 
 
-describe('API resource', () => {
-	before(() => {
-		return runServer(TEST_DATABASE_URL);
+describe('API resource', function() {
+	before(function() {
+		return runServer();
 	});
 
-	after(() => {
+	after(function() {
 		return closeServer();
 	});
 
-	describe('GET endpoint', () => {
-		it('should list podcasts on GET', () => {
+	describe('GET endpoint', function() {
+		it('should get podcast search results', function() {
 			return chai.request(app)
 				.get('/podcasts')
-				.then((res) => {
+				.then(function(res) {
+					res.should.have.status(200);
+				})
+		});
+
+		it('should get queue items', function() {
+			return chai.request(app)
+				.get('/queueItem')
+				.then(function(res) {
+					res.should.have.status(200);
+				})
+		});
+
+		it('should get user info', function() {
+			return chai.request(app)
+				.get('/user')
+				.then(function(res) {
 					res.should.have.status(200);
 				})
 		});
