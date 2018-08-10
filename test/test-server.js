@@ -8,12 +8,23 @@ const expect = chai.expect;
 
 chai.use(chaiHttp);
 
-describe('index', () => {
-	it('should return 200', () => {
+describe('index', function() {
+	it('should return 200', function() {
 		return chai
 			.request(app)
 			.get('/')
-			.then((res) => {
+			.then(function(res) {
+				expect(res).to.have.status(200);
+			});
+	});
+});
+
+describe('app', function() {
+	it('should return 200', function() {
+		return chai
+			.request(app)
+			.get('/')
+			.then(function(res) {
 				expect(res).to.have.status(200);
 			});
 	});
