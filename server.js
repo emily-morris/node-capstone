@@ -15,6 +15,7 @@ const { QueueItem, User } = require('./models');
 const app = express();
 
 app.use(express.static('public'));
+app.use(express.json());
 app.use(morgan('common'));
 
 function getPodcasts(query, res) {

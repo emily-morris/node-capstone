@@ -2,7 +2,7 @@
   "name": "node-capstone",
   "version": "1.0.0",
   "description": "Capstone for Thinkful",
-  "main": "index.js",
+  "main": "server.js",
   "scripts": {
     "start": "node server.js",
     "test": "mocha"
@@ -11,6 +11,7 @@
   "license": "ISC",
   "dependencies": {
     "express": "^4.16.3",
+    "hoek": "^5.0.3",
     "mongoose": "^5.2.5",
     "morgan": "^1.9.0",
     "nodemon": "^1.18.3",

@@ -2,11 +2,55 @@
 	box-sizing: border-box;
 }
 
+body {
+	font-family: 'Abril Fatface', cursive;
+}
+
 header,
 main {
 	display: flex;
 	flex-direction: column;
+}
+
+h1 {
 	text-align: center;
+}
+
+.fixed-nav {
+	position: fixed;
+	width: 100%;
+	height: 50px;
+}
+
+h2 {
+	text-align: center;
+	font-size: 22px;
+}
+
+.search-bar {
+}
+
+.fixed-nav li,
+.fixed-nav a {
+	height: 50px;
+}
+
+.menu {
+	
+}
+
+.menu-items {
+	display: inline-block;
+}
+
+.menu-items li {
+	display: inline-block;
+	margin-right: 10px;
+	margin-left: 10px;
+}
+
+.menu-items a {
+	text-decoration: none;
 }
 
 .search-page,
