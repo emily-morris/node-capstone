@@ -32,6 +32,7 @@ function getUserQueue(res) {
 		.then(queueItems => {
 			let queue = [];
 			queueItems.forEach((item, index) => {
+				console.log(item);
 				unirest.get('https://listennotes.p.mashape.com/api/v1/podcasts/' + item.listenNotesId)
 				.header('X-Mashape-Key', apiKey)
 				.header('Accept', 'application/json')
@@ -55,10 +56,6 @@ function getUserQueue(res) {
 
 app.get('/', (req, res) => {
   res.sendFile(__dirname + '/index.html');
-});
-
-app.get('/', (req, res) => {
-  res.sendFile(__dirname + '/app.js');
 });
 
 app.get('/podcasts', (req, res) => {
@@ -194,12 +191,6 @@ function closeServer() {
       });
     });
   });
-}
-
-if(require.main === module) {
-	app.listen(process.env.PORT || 8080, () => {
-		console.log(`App listening on ${this.address().port}`);
-	});
 }
 
 if (require.main === module) {
