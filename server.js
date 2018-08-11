@@ -28,7 +28,15 @@ function getPodcasts(query, res) {
 	});
 }
 
-function getUserQueue(res) {
+app.get('/', (req, res) => {
+  res.sendFile(__dirname + '/index.html');
+});
+
+app.get('/podcasts', (req, res) => {
+	getPodcasts(req.query.q, res);
+});
+
+app.get('/queue', (req, res) => {
 	QueueItem
 		.find({user: ('5b61b805b7bc548452d268c2')})
 		.then(queueItems => {
@@ -54,19 +62,7 @@ function getUserQueue(res) {
 				});
 			})
 		})
-}
-
-app.get('/', (req, res) => {
-  res.sendFile(__dirname + '/index.html');
 });
-
-app.get('/podcasts', (req, res) => {
-	getPodcasts(req.query.q, res);
-});
-
-app.get('/queue', (req, res) => {
-	getUserQueue(res);
-})
 
 app.get('/queueItem', (req, res) => {
 	QueueItem.find()
@@ -159,7 +155,7 @@ app.use('*', (req, res) => {
 
 let server;
 
-function runServer(databaseURL, port = PORT) {
+function runServer(databaseURL = DATABASE_URL, port = PORT) {
 	return new Promise((resolve, reject) => {
 		mongoose.connect(
 			databaseURL,

@@ -1,4 +1,7 @@
 {
-	"listenNotesId": "abcd",
-	"user": {"$oid": "5b61b805b7bc548452d268c2"}
+    "_id" : {"$oid": "5b6dec7d7a96cd3acc5142cf"},
+    "listenNotesId" : "cb7222cec7f64211afc4b6d0714733f7",
+    "user" : {"$oid":"5b61b805b7bc548452d268c2"},
+    "__v" : 0,
+    "notes" : "good"
 }
