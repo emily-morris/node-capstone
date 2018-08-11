@@ -4,20 +4,19 @@ const chai = require('chai');
 const chaiHttp = require('chai-http');
 const mongoose = require('mongoose');
 
-// make expect syntax available
-// const expect = chai.expect;
-
+// make should syntax available
 const should = chai.should();
 
 const {QueueItem, User} = require('../models');
 const {app, runServer, closeServer} = require('../server');
+const {TEST_DATABASE_URL} = require('../config');
 
 chai.use(chaiHttp);
 
 describe('podcasts API resource', function() {
 
 	before(function() {
-		return runServer();
+		return runServer(TEST_DATABASE_URL);
 	});
 
 	after(function() {
