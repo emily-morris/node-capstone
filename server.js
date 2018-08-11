@@ -148,6 +148,10 @@ app.put('/queueItem/:id', jsonParser, (req, res, next) => {
 		.catch(next);
 });
 
+app.use((req, res, next) => {
+  setTimeout(() => next(), Math.round(Math.random() * 1000))
+});
+
 // use if client makes request to non-existent endpoint
 app.use('*', (req, res) => {
 	res.status(404).json({message: 'Not found'});
