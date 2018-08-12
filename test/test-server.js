@@ -24,16 +24,7 @@ describe('podcasts API resource', function() {
 	});
 
 	describe('GET endpoint', function() {
-		it('should get list of podcasts', function() {
-			let res;
-			return chai.request(app)
-				.get('/podcasts?q=meditation')
-				.then(_res => {
-					res = _res;
-					res.should.have.status(200);
-				})
-		});
-
+	
 		it('should get podcasts with the right fields', function() {
 			// get podcasts and ensure they have expected keys
 			return chai.request(app)
@@ -82,11 +73,11 @@ describe('podcasts API resource', function() {
 		});
 	})
 
-	describe('POST endpoint', function() {
-		it('should add a new item to queue', function() {
-			
-		});
-	})
+	// describe('POST endpoint', function() {
+	// 	it('should add a new item to queue', function() {
+					
+	// 	});
+	// })
 
 	describe('DELETE endpoint', function() {
 		it('should delete a queue item by id', function() {
