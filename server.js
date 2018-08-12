@@ -1,26 +1,30 @@
 'use strict';
 
 const express = require('express');
+const authRoutes = require('./routes/auth-routes');
+const passportSetup = require('./config/passport-setup');
 const mongoose = require('mongoose');
 const keys = require('./config/keys');
+const { PORT, DATABASE_URL } = require('./config');
+const { QueueItem, User } = require('./models');
 const morgan = require('morgan');
 const unirest = require('unirest');
 const jsonParser = require('body-parser').json();
-
-
 const apiKey = 'FLPn3vd3iImshX0Wz9QLpJuAAYcop1Ml2jVjsnH8QFlK0EEpfK';
 
 mongoose.Promise = global.Promise;
 
-const { PORT, DATABASE_URL } = require('./config');
-const { QueueItem, User } = require('./models');
-const authRoutes = require('./routes/auth-routes');
-const passportSetup = require('./config/passport-setup');
-
 const app = express();
+
+// connect to mongodb
+mongoose.connect(keys.mongodb.dbURI, () => {
+	console.log('connected to mongodb');
+});
 
 app.use(express.static('public'));
 app.use(express.json());
+// set up routes
+app.use('/auth', authRoutes);
 app.use(morgan('common'));
 
 function getPodcasts(query, res) {
@@ -31,13 +35,7 @@ function getPodcasts(query, res) {
 		  res.send(result.body);
 	});
 }
-// connect to mongodb
-mongoose.connect(keys.mongodb.dbURI, () => {
-	console.log('connected to mongodb');
-});
 
-// set up routes
-app.use('/auth', authRoutes);
 app.get('/', (req, res) => {
 	console.log(__dirname)
   res.sendfile(__dirname + '/index.html');
