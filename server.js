@@ -2,9 +2,11 @@
 
 const express = require('express');
 const mongoose = require('mongoose');
+const keys = require('./config/keys');
 const morgan = require('morgan');
 const unirest = require('unirest');
 const jsonParser = require('body-parser').json();
+
 
 const apiKey = 'FLPn3vd3iImshX0Wz9QLpJuAAYcop1Ml2jVjsnH8QFlK0EEpfK';
 
@@ -12,6 +14,8 @@ mongoose.Promise = global.Promise;
 
 const { PORT, DATABASE_URL } = require('./config');
 const { QueueItem, User } = require('./models');
+const authRoutes = require('./routes/auth-routes');
+const passportSetup = require('./config/passport-setup');
 
 const app = express();
 
@@ -27,9 +31,16 @@ function getPodcasts(query, res) {
 		  res.send(result.body);
 	});
 }
+// connect to mongodb
+mongoose.connect(keys.mongodb.dbURI, () => {
+	console.log('connected to mongodb');
+});
 
+// set up routes
+app.use('/auth', authRoutes);
 app.get('/', (req, res) => {
-  res.sendFile(__dirname + '/index.html');
+	console.log(__dirname)
+  res.sendfile(__dirname + '/index.html');
 });
 
 app.get('/podcasts', (req, res) => {
@@ -79,6 +90,7 @@ app.get('/user', (req, res) => {
 	User
 		.find()
 		.then(users => {
+			console.log(users)
 			res.json(users.map(user => {
 				return {
 					id: user._id,

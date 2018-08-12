@@ -1,7 +1,6 @@
 'use strict';
 
 const mongoose = require('mongoose');
-mongoose.Promise = global.Promise;
 
 
 const queueItemSchema = mongoose.Schema({
@@ -15,10 +14,8 @@ const queueItemSchema = mongoose.Schema({
 });
 
 const userSchema = mongoose.Schema({
-	userName: {
-		type: String,
-		unique: true
-	}
+	userName: String,
+	googleId: String
 });
 
 const QueueItem = mongoose.model('QueueItem', queueItemSchema);

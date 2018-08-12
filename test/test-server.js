@@ -82,16 +82,22 @@ describe('podcasts API resource', function() {
 		});
 	})
 
-	// describe('DELETE endpoint', function() {
-	// 	it('should delete a queue item by id', function() {
-	// 		let queueItem;
+	describe('POST endpoint', function() {
+		it('should add a new item to queue', function() {
+			
+		});
+	})
 
-	// 		return QueueItem
-	// 			.findOne()
-	// 			.then(_queueItem => {
-	// 				queueItem = _queueItem ;
-	// 				return chai.request(app).delete(`/queueItem/${queueItem.id}`);
-	// 			})
-	// 	})
-	// })
+	describe('DELETE endpoint', function() {
+		it('should delete a queue item by id', function() {
+			let queueItem;
+
+			return QueueItem
+				.findOne()
+				.then(_queueItem => {
+					queueItem = _queueItem ;
+					return chai.request(app).delete(`/queueItem/${queueItem.id}`);
+				})
+		});
+	})
 })
